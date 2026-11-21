@@ -1,0 +1,6 @@
+{
+  "name": "Vyapar - Desktop Billing & Accounting Software",
+  "description": "Vyapar desktop billing, inventory and GST accounting software replica with full invoice management, POS, parties, items and reporting.",
+  "requestFramePermissions": ["camera"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

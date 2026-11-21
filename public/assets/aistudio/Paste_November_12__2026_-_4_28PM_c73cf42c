@@ -1,0 +1,1420 @@
+MY STORE — NEXT 1000 FEATURE UPGRADE
+🚀 MY STORE — NEXT 1000 FEATURE UPGRADE
+You have already built MY STORE using the previous requirements.
+NOW PERFORM A MASSIVE ADVANCED UPGRADE.
+🔴 CRITICAL RULE
+DO NOT DELETE ANY EXISTING FEATURE.
+DO NOT REWRITE THE APPLICATION INTO A SMALL DEMO.
+DO NOT REPLACE WORKING FEATURES WITH PLACEHOLDERS.
+DO NOT BREAK EXISTING DATA.
+KEEP ALL EXISTING:
+Pages
+Sidebar
+Navigation
+Forms
+Tables
+Modals
+Calculations
+🚀 Powered by ChatGPT Exporter 56 / 1315
+Reports
+Inventory
+Customers
+Suppliers
+Sales
+Purchases
+Payments
+Settings
+Backup/Restore
+Local storage
+Dark mode
+Printing
+Import/export
+ADD the following advanced functionality on top of the existing application.
+COMPLETE ERP-STYLE DATA ARCHITECTURE
+==================================================
+Create a proper internal data architecture.
+Use IndexedDB as the primary database for large datasets.
+Use localStorage only for:
+Preferences
+Theme
+UI state
+Small configuration values
+Create separate logical stores/tables for:
+businesses
+🚀 Powered by ChatGPT Exporter 57 / 1315
+customers
+suppliers
+items
+categories
+brands
+units
+warehouses
+stock
+stockMovements
+batches
+serialNumbers
+sales
+saleItems
+purchases
+purchaseItems
+estimates
+estimateItems
+salesOrders
+purchaseOrders
+deliveryChallans
+paymentsIn
+paymentsOut
+expenses
+incomes
+creditNotes
+debitNotes
+ledgers
+taxes
+🚀 Powered by ChatGPT Exporter 58 / 1315
+accounts
+journals
+recurringTransactions
+employees
+users
+activityLogs
+notifications
+backups
+recycleBin
+settings
+Create reusable database functions:
+create()
+read()
+update()
+delete()
+query()
+bulkInsert()
+bulkUpdate()
+bulkDelete()
+==================================================
+ACCOUNTING ENGINE
+==================================================
+Build a proper double-entry accounting engine.
+Support:
+Ledger
+Journal
+Debit
+Credit
+🚀 Powered by ChatGPT Exporter 59 / 1315
+Accounts
+Account Groups
+Trial Balance
+Profit & Loss
+Balance Sheet
+Cash Flow
+Create account groups such as:
+Assets
+Liabilities
+Capital
+Income
+Expenses
+Transactions must create appropriate accounting entries automatically.
+Example:
+SALE:
+Customer Account → Debit
+Sales Account → Credit
+Tax Account → Credit
+PAYMENT RECEIVED:
+Cash/Bank → Debit
+Customer → Credit
+PURCHASE:
+Purchase/Inventory → Debit
+Supplier → Credit
+EXPENSE:
+Expense Account → Debit
+Cash/Bank → Credit
+The accounting engine must use actual transactions.
+🚀 Powered by ChatGPT Exporter 60 / 1315
+Do not display fake accounting numbers.
+==================================================
+CHART OF ACCOUNTS
+==================================================
+Create a complete Chart of Accounts.
+Features:
+Add Account
+Edit Account
+Delete Account
+Account Group
+Account Type
+Opening Balance
+Debit/Credit Nature
+Active/Inactive
+Ledger
+Provide a tree-style account hierarchy.
+==================================================
+JOURNAL VOUCHER
+==================================================
+Create:
+New Journal Voucher
+Fields:
+Date
+Voucher Number
+Narration
+Debit Account
+🚀 Powered by ChatGPT Exporter 61 / 1315
+Credit Account
+Amount
+Reference
+Validation:
+Total Debit MUST equal Total Credit.
+Do not allow saving an unbalanced journal.
+==================================================
+PAYMENT VOUCHER
+==================================================
+Create professional payment voucher screens.
+Support:
+Cash
+Bank
+UPI
+Cheque
+Other
+Generate proper ledger entries.
+==================================================
+RECEIPT VOUCHER
+==================================================
+Create receipt vouchers.
+Support:
+Customer
+Other Income
+Cash
+🚀 Powered by ChatGPT Exporter 62 / 1315
+Bank
+Reference
+Notes
+Automatically update ledger.
+==================================================
+CONTRA VOUCHER
+==================================================
+Create Contra transactions:
+Cash → Bank
+Bank → Cash
+Bank → Bank
+Automatically update both accounts.
+==================================================
+INVENTORY VALUATION
+==================================================
+Implement inventory valuation methods:
+Average Cost
+FIFO
+Allow selecting the valuation method in settings.
+Calculate:
+Stock Quantity
+Stock Cost
+Stock Value
+COGS
+Gross Profit
+🚀 Powered by ChatGPT Exporter 63 / 1315
+Use actual purchase history.
+==================================================
+SERIAL NUMBER MANAGEMENT
+==================================================
+Add optional serial number tracking.
+Support:
+Serial Number
+Item
+Purchase Date
+Sale Date
+Customer
+Warranty
+Status
+Statuses:
+Available
+Sold
+Returned
+Damaged
+When serial-tracked items are sold, select the actual serial numbers.
+==================================================
+WARRANTY MANAGEMENT
+==================================================
+Add warranty tracking.
+Fields:
+Warranty Period
+🚀 Powered by ChatGPT Exporter 64 / 1315
+Start Date
+End Date
+Customer
+Item
+Serial Number
+Show:
+Active Warranty
+Expiring Warranty
+Expired Warranty
+==================================================
+PURCHASE PRICE HISTORY
+==================================================
+For every item track:
+Supplier
+Date
+Quantity
+Purchase Price
+Tax
+Total
+Automatically maintain purchase history.
+==================================================
+CUSTOMER PRICE LIST
+==================================================
+Allow customer-specific pricing.
+Example:
+Retail Price
+🚀 Powered by ChatGPT Exporter 65 / 1315
+Wholesale Price
+VIP Price
+Customer-specific Price
+When customer is selected in a sale, automatically use the appropriate price.
+==================================================
+SUPPLIER PRICE LIST
+==================================================
+Track supplier-specific purchase prices.
+When supplier is selected, show preferred purchase price.
+==================================================
+PRICE LEVELS
+==================================================
+Create:
+Retail
+Wholesale
+Dealer
+Custom
+Allow users to create additional price levels.
+==================================================
+INVENTORY RESERVATION
+==================================================
+When a sales order is created:
+Available Stock
+Reserved Stock
+Free Stock
+🚀 Powered by ChatGPT Exporter 66 / 1315
+Calculate:
+Free Stock = Available Stock - Reserved Stock
+When order is cancelled, release reserved stock.
+==================================================
+BACKORDERS
+==================================================
+If requested quantity exceeds stock:
+Show:
+Available
+Backordered
+Short Quantity
+Allow saving the order as a backorder.
+==================================================
+PURCHASE REORDER SYSTEM
+==================================================
+Create automatic reorder suggestions.
+Use:
+Current Stock
+Minimum Stock
+Reorder Level
+Preferred Supplier
+Average Consumption
+Show:
+"Suggested Purchase"
+Allow:
+Create Purchase Order
+directly from the suggestion.
+🚀 Powered by ChatGPT Exporter 67 / 1315
+==================================================
+INVENTORY AGING
+==================================================
+Create stock aging report.
+Buckets:
+0–30 days
+31–60 days
+61–90 days
+91–180 days
+180+ days
+==================================================
+DEAD STOCK
+==================================================
+Detect items with no sales for a configurable period.
+Examples:
+30 days
+60 days
+90 days
+180 days
+Show:
+Item
+Quantity
+Value
+Last Sale Date
+Days Without Sale
+==================================================
+🚀 Powered by ChatGPT Exporter 68 / 1315
+FAST / SLOW MOVING ITEMS
+==================================================
+Classify products as:
+Fast Moving
+Normal
+Slow Moving
+Dead Stock
+Use actual transaction history.
+==================================================
+PROFITABILITY ANALYSIS
+==================================================
+Calculate:
+Profit by Item
+Profit by Customer
+Profit by Category
+Profit by Invoice
+Profit by Salesperson
+Profit by Date
+Profit Margin %
+==================================================
+CUSTOMER PROFITABILITY
+==================================================
+For every customer show:
+Revenue
+Cost
+Gross Profit
+🚀 Powered by ChatGPT Exporter 69 / 1315
+Discount
+Outstanding
+Net Contribution
+==================================================
+SUPPLIER ANALYSIS
+==================================================
+Show:
+Purchase Value
+Average Purchase Price
+Outstanding
+Purchase Frequency
+Top Items
+Supplier Performance
+==================================================
+SALES FORECASTING
+==================================================
+Create a LOCAL statistical forecasting system.
+No AI API.
+Use historical transaction data.
+Show:
+Expected Sales
+Expected Purchases
+Expected Stock Requirement
+Expected Cash Flow
+Clearly label forecasts as estimates.
+==================================================
+🚀 Powered by ChatGPT Exporter 70 / 1315
+BUSINESS KPIs
+==================================================
+Create KPI dashboard.
+KPIs:
+Revenue
+Gross Profit
+Net Profit
+Gross Margin
+Average Invoice Value
+Sales Growth
+Purchase Growth
+Customer Growth
+Inventory Turnover
+Receivable Days
+Payable Days
+==================================================
+COMPARISON DASHBOARD
+==================================================
+Allow comparing:
+Today vs Yesterday
+This Week vs Last Week
+This Month vs Last Month
+This Quarter vs Previous Quarter
+This Year vs Previous Year
+Show:
+Amount
+Difference
+🚀 Powered by ChatGPT Exporter 71 / 1315
+Percentage Change
+==================================================
+FISCAL YEAR MANAGEMENT
+==================================================
+Support multiple financial years.
+Allow:
+Create Financial Year
+Switch Financial Year
+Close Financial Year
+Archive Financial Year
+Do not delete previous year data.
+==================================================
+OPENING BALANCES
+==================================================
+Create opening balance wizard.
+Support:
+Customers
+Suppliers
+Cash
+Bank
+Accounts
+Stock
+==================================================
+YEAR-END CLOSING
+==================================================
+Create year-end process.
+🚀 Powered by ChatGPT Exporter 72 / 1315
+Calculate:
+Revenue
+Expenses
+Profit
+Loss
+Closing Stock
+Carry-forward balances
+Require confirmation before closing.
+==================================================
+MULTI-BUSINESS
+==================================================
+Allow multiple businesses inside the same local application.
+Each business should have separate:
+Customers
+Suppliers
+Items
+Transactions
+Inventory
+Accounts
+Reports
+Settings
+Provide:
+Business Switcher
+==================================================
+EMPLOYEE MANAGEMENT
+==================================================
+🚀 Powered by ChatGPT Exporter 73 / 1315
+Add employee records.
+Fields:
+Name
+Phone
+Email
+Address
+Joining Date
+Role
+Salary
+Commission
+Status
+==================================================
+SALESPERSON MANAGEMENT
+==================================================
+Assign sales to employees.
+Track:
+Sales
+Revenue
+Collection
+Commission
+Outstanding
+Create salesperson reports.
+==================================================
+COMMISSION SYSTEM
+==================================================
+🚀 Powered by ChatGPT Exporter 74 / 1315
+Support commission rules:
+Percentage of sales
+Fixed amount
+Product-based
+Category-based
+Calculate automatically.
+==================================================
+USER ROLES
+==================================================
+Create local role-based permissions.
+Roles:
+Owner
+Admin
+Manager
+Sales
+Purchase
+Inventory
+Accountant
+Viewer
+Allow permission controls for:
+View
+Create
+Edit
+Delete
+Print
+Export
+🚀 Powered by ChatGPT Exporter 75 / 1315
+Reports
+Settings
+==================================================
+LOCAL LOGIN
+==================================================
+If login is enabled, implement it completely locally.
+Do NOT use:
+Firebase
+Cloud authentication
+Google authentication
+Any external service
+Use locally stored authentication data.
+Clearly explain that local login is device-local and is not cloud security.
+==================================================
+POS ADVANCED MODE
+==================================================
+Upgrade POS.
+Features:
+Full-screen POS
+Product grid
+Categories
+Barcode input
+Cart
+Hold Bill
+Resume Bill
+Customer selection
+🚀 Powered by ChatGPT Exporter 76 / 1315
+Quick payment
+Split payment
+Discount
+Tax
+Park transaction
+Return
+Receipt print
+Keyboard-friendly operation.
+==================================================
+POS RECEIPT CUSTOMIZATION
+==================================================
+Support:
+Business Logo
+Business Name
+Address
+Phone
+GSTIN
+Invoice Number
+Cashier
+Customer
+Items
+Tax
+Total
+Payment Mode
+Footer
+==================================================
+🚀 Powered by ChatGPT Exporter 77 / 1315
+CASH REGISTER
+==================================================
+Create a cash register.
+Track:
+Opening Cash
+Cash Sales
+Cash Expenses
+Cash Receipts
+Cash Payments
+Cash Withdrawals
+Cash Deposits
+Closing Cash
+Show expected vs actual cash.
+==================================================
+CASH RECONCILIATION
+==================================================
+Allow user to enter actual cash.
+Calculate:
+Expected Cash
+Actual Cash
+Difference
+Reason
+Save reconciliation record.
+==================================================
+BANK RECONCILIATION
+==================================================
+🚀 Powered by ChatGPT Exporter 78 / 1315
+Create manual bank reconciliation.
+Fields:
+Bank
+Statement Date
+Transaction
+Amount
+Cleared
+Reference
+Show:
+Book Balance
+Cleared Balance
+Difference
+==================================================
+EXPENSE BUDGET
+==================================================
+Create budgets.
+Set:
+Monthly Budget
+Category Budget
+Annual Budget
+Compare:
+Budget
+Actual
+Difference
+Percentage Used
+==================================================
+🚀 Powered by ChatGPT Exporter 79 / 1315
+INCOME TARGETS
+==================================================
+Allow monthly sales/income targets.
+Dashboard:
+Target
+Actual
+Remaining
+Achievement %
+==================================================
+PAYMENT REMINDERS
+==================================================
+Create local reminder system.
+Show:
+Due Today
+Due Tomorrow
+Overdue
+Upcoming
+No external messaging API.
+Provide printable/copyable reminder text.
+==================================================
+CUSTOMER STATEMENT
+==================================================
+Create professional statement.
+Include:
+Opening Balance
+Invoices
+🚀 Powered by ChatGPT Exporter 80 / 1315
+Payments
+Credit Notes
+Adjustments
+Closing Balance
+Running Balance
+Date Range
+==================================================
+SUPPLIER STATEMENT
+==================================================
+Same functionality for suppliers.
+==================================================
+DOCUMENT NUMBERING
+==================================================
+Create customizable numbering.
+Examples:
+INV-000001
+PUR-000001
+EST-000001
+PAY-000001
+REC-000001
+Allow:
+Prefix
+Starting Number
+Year Format
+Reset Rules
+==================================================
+🚀 Powered by ChatGPT Exporter 81 / 1315
+DOCUMENT STATUS SYSTEM
+==================================================
+Support statuses:
+Draft
+Confirmed
+Partially Paid
+Paid
+Cancelled
+Overdue
+Returned
+Completed
+Each document type should have appropriate statuses.
+==================================================
+DOCUMENT TIMELINE
+==================================================
+Every major transaction should show a timeline.
+Example:
+Created
+Edited
+Payment Received
+Partially Paid
+Fully Paid
+Returned
+Cancelled
+==================================================
+ATTACHMENTS
+🚀 Powered by ChatGPT Exporter 82 / 1315
+==================================================
+Allow local attachment storage where technically practical.
+Examples:
+Receipt image
+Supplier invoice
+Document
+Product image
+Store locally using IndexedDB.
+Do not upload files anywhere.
+==================================================
+IMAGE MANAGEMENT
+==================================================
+Support local:
+Business Logo
+Item Image
+Customer Image if desired
+Supplier Image if desired
+Compress large images before storing where possible.
+==================================================
+ADVANCED REPORT BUILDER
+==================================================
+Create a report builder.
+Allow user to select:
+Data Source
+Columns
+🚀 Powered by ChatGPT Exporter 83 / 1315
+Filters
+Grouping
+Sorting
+Date Range
+Totals
+Then generate a report dynamically.
+Allow:
+Save Report
+Print
+CSV Export
+JSON Export
+==================================================
+CUSTOM DASHBOARD WIDGETS
+==================================================
+Allow users to add/remove widgets.
+Widgets:
+Sales
+Purchases
+Profit
+Expenses
+Income
+Outstanding
+Stock
+Top Customers
+Top Items
+Cash
+Bank
+🚀 Powered by ChatGPT Exporter 84 / 1315
+Targets
+==================================================
+CUSTOM FIELDS
+==================================================
+Allow users to create custom fields for:
+Customers
+Suppliers
+Items
+Sales
+Purchases
+Examples:
+GST Type
+Area
+Sales Route
+Customer Code
+Internal Reference
+Store Location
+==================================================
+TAGGING SYSTEM
+==================================================
+Allow tags for:
+Customers
+Suppliers
+Items
+Transactions
+Examples:
+VIP
+🚀 Powered by ChatGPT Exporter 85 / 1315
+Wholesale
+Urgent
+Online
+Local
+High Value
+==================================================
+SMART FILTERS
+==================================================
+Create reusable filters.
+Users can save:
+"My Overdue Customers"
+"Low Stock"
+"High Value Sales"
+"Unpaid Invoices"
+"Top Customers"
+==================================================
+RECENTLY VIEWED
+==================================================
+Remember recently viewed:
+Customers
+Items
+Invoices
+Purchases
+Reports
+Show a Recently Viewed section.
+==================================================
+🚀 Powered by ChatGPT Exporter 86 / 1315
+FAVORITES
+==================================================
+Allow users to favorite:
+Customers
+Items
+Reports
+Pages
+Transactions
+==================================================
+NOTIFICATION CENTER
+==================================================
+Create notification center.
+Notifications:
+Low Stock
+Overdue Invoice
+Payment Due
+Warranty Expiring
+Batch Expiring
+Budget Exceeded
+Backup Reminder
+==================================================
+BACKUP HISTORY
+==================================================
+Track local backups.
+Show:
+Backup Date
+🚀 Powered by ChatGPT Exporter 87 / 1315
+File Size
+Data Version
+Record Count
+Restore
+Delete
+==================================================
+DATABASE HEALTH
+==================================================
+Create a local database health page.
+Show:
+Customers Count
+Suppliers Count
+Items Count
+Sales Count
+Purchases Count
+Database Size estimate
+Last Backup
+Data Version
+Storage availability where browser APIs allow it.
+==================================================
+DATA INTEGRITY CHECK
+==================================================
+Create a diagnostic tool.
+Check:
+Broken references
+Invalid transactions
+Negative stock
+🚀 Powered by ChatGPT Exporter 88 / 1315
+Unbalanced journals
+Duplicate invoice numbers
+Missing customers
+Missing items
+Invalid balances
+Provide repair suggestions.
+Do NOT automatically destroy data.
+==================================================
+DUPLICATE DETECTION
+==================================================
+Detect possible duplicate:
+Customers
+Suppliers
+Items
+Invoices
+Allow:
+Merge
+Keep Both
+Ignore
+==================================================
+CUSTOMER MERGE
+==================================================
+When merging customers:
+Combine:
+Transactions
+Payments
+Ledger
+🚀 Powered by ChatGPT Exporter 89 / 1315
+Outstanding
+Notes
+Tags
+Custom fields
+Do not lose financial history.
+==================================================
+ITEM MERGE
+==================================================
+Merge duplicate items safely.
+Preserve historical transactions.
+==================================================
+IMPORT CENTER
+==================================================
+Create one central import system.
+Import:
+Customers
+Suppliers
+Items
+Opening Balances
+Transactions where supported
+Provide:
+Upload
+Mapping
+Preview
+Validation
+Errors
+Import
+🚀 Powered by ChatGPT Exporter 90 / 1315
+Summary
+==================================================
+EXPORT CENTER
+==================================================
+Create central export system.
+Export:
+Customers
+Suppliers
+Items
+Sales
+Purchases
+Payments
+Expenses
+Income
+Stock
+Ledgers
+Reports
+Full Backup
+==================================================
+CSV ENGINE
+==================================================
+Build a reliable CSV parser/exporter in vanilla JavaScript.
+Handle:
+Commas
+Quotes
+New lines
+🚀 Powered by ChatGPT Exporter 91 / 1315
+UTF-8
+Hindi text
+Special characters
+==================================================
+LOCAL PDF-READY PRINTING
+==================================================
+Do not depend on external PDF libraries.
+Create print-optimized HTML documents.
+User can use browser:
+Print → Save as PDF
+Provide excellent print CSS.
+==================================================
+INVOICE TEMPLATES
+==================================================
+Create several original templates:
+Classic
+Modern
+Compact
+Professional
+Retail
+Thermal
+Allow selecting default template.
+==================================================
+THERMAL RECEIPT
+==================================================
+Create 58mm and 80mm thermal layouts.
+🚀 Powered by ChatGPT Exporter 92 / 1315
+Use print CSS.
+==================================================
+DOCUMENT PREVIEW
+==================================================
+Before printing:
+Show preview.
+Actions:
+Print
+Close
+Download through browser print dialog
+==================================================
+MOBILE RESPONSIVE MODE
+==================================================
+The desktop interface should remain primary.
+Also make it usable on:
+Tablet
+Mobile
+Use responsive:
+Tables
+Forms
+Sidebar
+Dashboard
+Modals
+==================================================
+PWA-STYLE EXPERIENCE WITHOUT CLOUD
+==================================================
+🚀 Powered by ChatGPT Exporter 93 / 1315
+If possible, add:
+manifest.json
+service-worker.js
+so the application can optionally behave like an installable local web app.
+IMPORTANT:
+The service worker must only cache local application files.
+No cloud services.
+No remote resources.
+The core app must STILL work by opening index.html if the browser allows it.
+==================================================
+OFFLINE VERIFICATION
+==================================================
+Create a page:
+Offline Status
+Show:
+Internet-independent mode: ENABLED
+External API usage: NONE
+Cloud database: NONE
+Local database: IndexedDB
+==================================================
+PERFORMANCE
+==================================================
+Optimize for large datasets.
+Test conceptually with:
+10,000 customers
+20,000 items
+50,000 transactions
+🚀 Powered by ChatGPT Exporter 94 / 1315
+100,000 ledger entries
+Use:
+Pagination
+Lazy rendering
+IndexedDB indexes
+Debounced search
+Efficient DOM updates
+Do not render thousands of rows unnecessarily.
+==================================================
+ACCESSIBILITY
+==================================================
+Add:
+Keyboard navigation
+ARIA labels where appropriate
+Focus management
+Visible focus
+Proper form labels
+Readable contrast
+Escape-to-close modals
+==================================================
+INTERNATIONALIZATION ARCHITECTURE
+==================================================
+Prepare the application for multiple languages.
+At minimum structure the code so translations can later support:
+English
+Hindi
+Do not require cloud translation.
+🚀 Powered by ChatGPT Exporter 95 / 1315
+==================================================
+CURRENCY SETTINGS
+==================================================
+Allow:
+Currency Symbol
+Currency Code
+Decimal Places
+Indian number formatting
+Example:
+₹1,00,000.00
+==================================================
+DATE SETTINGS
+==================================================
+Support:
+DD/MM/YYYY
+MM/DD/YYYY
+YYYY-MM-DD
+Store dates consistently internally.
+==================================================
+TIME SETTINGS
+==================================================
+Support:
+12-hour
+24-hour
+==================================================
+DATA PRIVACY
+🚀 Powered by ChatGPT Exporter 96 / 1315
+==================================================
+Add a privacy page explaining:
+All business data is stored locally.
+No business data is uploaded.
+No external analytics.
+No external tracking.
+No cloud database.
+==================================================
+APPLICATION LOCK
+==================================================
+Create optional local app lock.
+User can set a local PIN.
+Do not claim this is enterprise-grade encryption.
+Allow:
+Enable PIN
+Disable PIN
+Change PIN
+Auto-lock after inactivity
+==================================================
+AUTO BACKUP REMINDER
+==================================================
+Show local reminder:
+"You haven't backed up your data recently."
+Allow user to configure:
+7 days
+15 days
+30 days
+🚀 Powered by ChatGPT Exporter 97 / 1315
+Never
+==================================================
+SETTINGS IMPORT/EXPORT
+==================================================
+Allow exporting UI/settings separately from business data.
+==================================================
+RESET OPTIONS
+==================================================
+Create safe reset controls:
+Reset UI Settings
+Reset Demo Data
+Clear Business Data
+Factory Reset
+Each destructive action must require strong confirmation.
+==================================================
+GLOBAL UNDO
+==================================================
+Where practical, implement an Undo action after:
+Delete
+Bulk Delete
+Stock Adjustment
+Important modifications
+Use temporary local snapshots.
+==================================================
+CHANGE HISTORY
+==================================================
+🚀 Powered by ChatGPT Exporter 98 / 1315
+For important records show:
+Created By
+Created At
+Updated By
+Updated At
+Changes
+Since this is local, use the local user/employee identity.
+==================================================
+DATA RECOVERY
+==================================================
+If the application detects corrupted data:
+Do NOT automatically wipe the database.
+Show:
+Recovery Mode
+Last Backup
+Repair Options
+Export Raw Data
+==================================================
+DEMO / REAL MODE
+==================================================
+Provide:
+Demo Mode
+Real Business Mode
+Demo Mode can contain sample data.
+Real Mode starts empty.
+==================================================
+🚀 Powered by ChatGPT Exporter 99 / 1315
+FIRST-RUN SETUP WIZARD
+==================================================
+On first launch show:
+Welcome to MY STORE
+Step 1 → Business Details
+Step 2 → Tax/GST Settings
+Step 3 → Currency
+Step 4 → Financial Year
+Step 5 → Invoice Settings
+Step 6 → Opening Balance
+Step 7 → Complete
+Allow Skip where appropriate.
+==================================================
+HELP CENTER
+==================================================
+Create a completely local Help Center.
+Sections:
+Getting Started
+Sales
+Purchases
+Inventory
+Customers
+Suppliers
+Payments
+Reports
+GST
+Backup
+🚀 Powered by ChatGPT Exporter 100 / 1315
+Settings
+No external help website required.
+==================================================
+BUILT-IN SHORTCUT GUIDE
+==================================================
+Create a keyboard shortcut reference page.
+==================================================
+SYSTEM INFORMATION
+==================================================
+Show:
+Browser
+Screen Size
+Storage Support
+IndexedDB Status
+Local Storage Status
+Service Worker Status if applicable
+==================================================
+DEBUG MODE
+==================================================
+Create optional developer/debug mode.
+Show:
+Database errors
+Performance timing
+Storage operations
+Validation errors
+Only enable when requested.
+🚀 Powered by ChatGPT Exporter 101 / 1315
+==================================================
+FINAL QA ENGINE
+==================================================
+Create a hidden/internal QA utility that can verify:
+Database initialization
+Required stores
+CRUD operations
+Invoice calculations
+Tax calculations
+Stock calculations
+Ledger balance
+Backup/restore
+Data migration
+Navigation
+No external network dependencies
+==================================================
+NETWORK DEPENDENCY TEST
+The application must not depend on:
+fetch()
+XMLHttpRequest
+WebSocket
+remote script
+remote CSS
+remote image
+remote API
+external CDN
+except browser APIs that are built into the browser.
+🚀 Powered by ChatGPT Exporter 102 / 1315
+Search the generated project for accidental external dependencies and remove
+them.
+==================================================
+CODE QUALITY
+Organize JavaScript into modules where supported.
+Use:
+clear function names
+reusable utilities
+centralized database logic
+centralized calculations
+centralized validation
+centralized formatting
+centralized modal system
+centralized notification system
+Avoid duplicate code.
+==================================================
+NO FAKE FEATURES
+THIS IS CRITICAL.
+Never write:
+"Coming Soon"
+"TODO"
+"Feature unavailable"
+"Demo only"
+when the feature is listed as required.
+Implement the feature locally.
+🚀 Powered by ChatGPT Exporter 103 / 1315
+If a feature genuinely cannot be implemented in a browser-only environment,
+provide the closest practical local implementation and clearly document the
+limitation.
+==================================================
+DATA SAFETY
+Before major schema changes:
+preserve existing records
+migrate data
+create backup snapshot
+never silently delete data
+==================================================
+FINAL MASTER REQUIREMENT
+The final MY STORE application should feel like a complete professional businessmanagement suite rather than a collection of disconnected HTML pages.
+All modules must use the SAME underlying local data.
+Example:
+Create Purchase
+↓
+Inventory increases
+↓
+Supplier balance updates
+↓
+Accounting ledger updates
+↓
+Cash/Bank changes if paid
+↓
+Purchase report updates
+↓
+Profit calculation updates
+🚀 Powered by ChatGPT Exporter 104 / 1315
+↓
+Dashboard updates
+Create Sale
+↓
+Inventory decreases
+↓
+Customer balance updates
+↓
+Accounting ledger updates
+↓
+Cash/Bank changes if paid
+↓
+Sales report updates
+↓
+Profit calculation updates
+↓
+Dashboard updates
+Payment
+↓
+Party balance updates
+↓
+Cash/Bank updates
+↓
+Ledger updates
+↓
+Outstanding report updates
+↓
+Dashboard updates
+EVERY MODULE MUST BE CONNECTED.
+==================================================
+🔥 FINAL NON-NEGOTIABLE RULES
+==================================================
+🚀 Powered by ChatGPT Exporter 105 / 1315
+HTML5 + CSS3 + VANILLA JAVASCRIPT ONLY.
+NO CLOUD.
+NO SERVER.
+NO API.
+NO API KEY.
+NO EXTERNAL DATABASE.
+NO CDN.
+NO EXTERNAL LIBRARIES.
+NO INTERNET REQUIRED.
+NO REMOVING EXISTING FEATURES.
+NO FAKE BUTTONS.
+NO PLACEHOLDER PAGES.
+NO FAKE REPORT NUMBERS.
+ALL DATA MUST BE LOCAL.
+ALL IMPORTANT CALCULATIONS MUST USE REAL DATA.
+ALL SIDEBAR ITEMS MUST WORK.
+ALL FORMS MUST SAVE.
+ALL CHANGES MUST PERSIST.
+BACKUP AND RESTORE MUST WORK.
+EXPORT/IMPORT MUST WORK.
+PRINTING MUST WORK.
+APPLICATION MUST REMAIN USABLE AFTER REOPENING.
+APPLICATION MUST WORK WITHOUT INTERNET.
+KEEP THE PROJECT ZIP-READY.
+==================================================
+FINAL DELIVERY
+After completing the upgrade:
+🚀 Powered by ChatGPT Exporter 106 / 1315
+Check every existing page.
+Check every new page.
+Check every sidebar link.
+Check every major button.
+Check database persistence.
+Check calculations.
+Check inventory.
+Check accounting.
+Check reports.
+Check backup/restore.
+Check import/export.
+Check print layouts.
+Check dark mode.
+Check responsive layout.
+Check offline operation.
+Remove accidental external dependencies.
+Fix JavaScript errors.
+Fix broken navigation.
+Fix broken forms.
+Fix broken calculations.
+THEN PRODUCE THE COMPLETE UPDATED PROJECT.
+The user must be able to:
+DOWNLOAD ZIP
+↓
+EXTRACT ZIP
+↓
+OPEN index.html
+↓
+USE MY STORE
+🚀 Powered by ChatGPT Exporter 107 / 1315
+WITHOUT INSTALLING ANYTHING.
+DO NOT GIVE ME ONLY AN EXPLANATION.
+BUILD THE ACTUAL APPLICATION.

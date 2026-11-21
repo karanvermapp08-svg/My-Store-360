@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Customer Login — Business Manager 360</title>
+  <link rel="stylesheet" href="./css/portal.css" />
+</head>
+<body>
+  <div class="portal-shell">
+    <header class="topbar-public">
+      <a class="back-link" href="./index.html">← Back</a>
+      <span style="font-size: 12px; color: #64748b; font-weight: 600;">Customer Portal</span>
+    </header>
+
+    <main class="center-stage">
+      <div class="auth-split-card">
+        <div class="auth-left">
+          <div style="text-align: center; margin-bottom: 20px;">
+            <div class="emblem-circle" style="width: 52px; height: 52px; margin-bottom: 10px; background: #b91c1c;">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+            </div>
+            <h1 style="font-size: 22px; font-weight: 800;">Customer Login</h1>
+            <p style="font-size: 12px; color: #64748b;">Sign in to access your account</p>
+          </div>
+
+          <div id="noticeBox" class="notice-box notice-error" style="display: none;"></div>
+
+          <div id="selectorBox">
+            <button id="googleBtn" type="button" class="btn btn-outline btn-full">Continue with Google</button>
+            <p style="text-align: center; font-size: 11px; color: #94a3b8; margin: 6px 0 0;">Requires internet connection</p>
+            <div class="divider">OR</div>
+            <button id="showEmailBtn" type="button" class="btn btn-outline btn-full" style="margin-bottom: 10px;">Login with Email</button>
+            <button id="showMobileBtn" type="button" class="btn btn-outline btn-full">Login with Mobile Number</button>
+          </div>
+
+          <form id="emailForm" style="display: none;">
+            <div class="form-group">
+              <label for="custEmail">Email Address</label>
+              <input id="custEmail" type="email" class="form-control" required placeholder="rahul.customer@mystore.local" />
+            </div>
+            <div class="form-group">
+              <label for="custPwd">Password</label>
+              <input id="custPwd" type="password" class="form-control" required placeholder="Enter your password" />
+            </div>
+            <button type="submit" class="btn btn-red btn-full">Login</button>
+            <div style="margin-top: 10px; display: flex; justify-content: space-between; font-size: 12px;">
+              <a href="#" id="backFromEmail" style="color: #64748b;">← Other options</a>
+              <a href="#" id="forgotCust" style="color: #8b1e2d; font-weight: 700;">Forgot Password?</a>
+            </div>
+          </form>
+
+          <form id="mobileForm" style="display: none;">
+            <div class="form-group">
+              <label for="custMobile">Mobile Number (+91)</label>
+              <input id="custMobile" type="tel" class="form-control" required placeholder="98450 11223" />
+            </div>
+            <button type="submit" class="btn btn-red btn-full">Request SMS OTP</button>
+            <div style="margin-top: 10px; font-size: 12px;">
+              <a href="#" id="backFromMobile" style="color: #64748b;">← Other options</a>
+            </div>
+          </form>
+
+          <div style="margin-top: 18px; padding-top: 14px; border-top: 1px solid #f1f5f9; text-align: center; font-size: 12px;">
+            New Customer? <a href="./register.html" style="color: #8b1e2d; font-weight: 800;">Create Account</a>
+            <div style="margin-top: 10px; font-size: 11px; color: #64748b;">
+              Offline Demo: <strong>rahul.customer@mystore.local</strong> / <strong>customer@123</strong>
+            </div>
+          </div>
+        </div>
+
+        <div class="auth-right">
+          <img src="./assets/portal-brand.svg" alt="Business Manager 360" style="width: 92px; height: 92px; margin-bottom: 16px;" />
+          <h2 style="font-size: 18px; font-weight: 800;">Your Account</h2>
+          <h3 style="font-size: 18px; font-weight: 800; color: #8b1e2d; margin-bottom: 8px;">Our Priority</h3>
+          <p style="font-size: 12px; color: #64748b; max-width: 210px; line-height: 1.5;">
+            Track orders, view GST invoices, manage delivery addresses and pay balances offline.
+          </p>
+        </div>
+      </div>
+    </main>
+    <div style="height: 20px;"></div>
+  </div>
+
+  <script src="./js/portal-auth.js"></script>
+  <script>
+    (function () {
+      var auth = window.BM360PortalAuth;
+      var notice = document.getElementById('noticeBox');
+      var selectorBox = document.getElementById('selectorBox');
+      var emailForm = document.getElementById('emailForm');
+      var mobileForm = document.getElementById('mobileForm');
+
+      function showNotice(msg, kind) {
+        notice.className = 'notice-box ' + (kind || 'notice-error');
+        notice.textContent = msg;
+        notice.style.display = 'block';
+      }
+
+      auth.ensureSeedData();
+
+      document.getElementById('googleBtn').onclick = function () {
+        showNotice('Google Sign-In requires an active internet connection and configured OAuth Client ID. Google login is never simulated offline — please sign in with Email.', 'notice-warn');
+      };
+      document.getElementById('showEmailBtn').onclick = function () {
+        selectorBox.style.display = 'none';
+        emailForm.style.display = 'block';
+        notice.style.display = 'none';
+      };
+      document.getElementById('showMobileBtn').onclick = function () {
+        selectorBox.style.display = 'none';
+        mobileForm.style.display = 'block';
+        notice.style.display = 'none';
+      };
+      document.getElementById('backFromEmail').onclick = function (e) {
+        e.preventDefault();
+        emailForm.style.display = 'none';
+        selectorBox.style.display = 'block';
+      };
+      document.getElementById('backFromMobile').onclick = function (e) {
+        e.preventDefault();
+        mobileForm.style.display = 'none';
+        selectorBox.style.display = 'block';
+      };
+      document.getElementById('forgotCust').onclick = function (e) {
+        e.preventDefault();
+        showNotice('Offline mode: Ask Store Admin to reset your password in Customer & Staff Management.', 'notice-warn');
+      };
+
+      mobileForm.onsubmit = function (e) {
+        e.preventDefault();
+        showNotice('SMS OTP requires an internet connection & SMS backend gateway. Offline OTP is never faked — please use Email Login.', 'notice-warn');
+      };
+
+      emailForm.onsubmit = async function (e) {
+        e.preventDefault();
+        var email = document.getElementById('custEmail').value.trim().toLowerCase();
+        var pwd = document.getElementById('custPwd').value;
+        var data = await auth.ensureSeedData();
+        var acc = data.customers.find(function (c) { return c.email.toLowerCase() === email; });
+        if (!acc) {
+          showNotice('No customer account registered with this email.');
+          return;
+        }
+        var ok = await auth.verifyPassword(pwd, acc.passwordHash);
+        if (!ok) {
+          showNotice('Incorrect password.');
+          return;
+        }
+        if (acc.status !== 'Active') {
+          showNotice('Your customer account is ' + acc.status + '. Contact store support.');
+          return;
+        }
+        auth.setSession({ sessionType: 'CUSTOMER', userId: acc.id });
+        window.location.href = './customer-dashboard.html';
+      };
+    })();
+  </script>
+</body>
+</html>

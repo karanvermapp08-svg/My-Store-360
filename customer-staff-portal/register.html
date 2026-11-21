@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Customer Registration — Business Manager 360</title>
+  <link rel="stylesheet" href="./css/portal.css" />
+</head>
+<body>
+  <div class="portal-shell">
+    <header class="topbar-public">
+      <a class="back-link" href="./customer-login.html">← Back to Customer Login</a>
+      <span style="font-size: 12px; color: #64748b; font-weight: 600;">New Customer Account</span>
+    </header>
+
+    <main class="center-stage">
+      <div class="auth-split-card">
+        <div class="auth-left">
+          <h1 style="font-size: 22px; font-weight: 800; margin-bottom: 4px;">Create Customer Account</h1>
+          <p style="font-size: 12px; color: #64748b; margin-bottom: 18px;">Register once to track orders, download invoices, and manage addresses offline.</p>
+
+          <div id="regNotice" class="notice-box notice-error" style="display: none;"></div>
+
+          <form id="registerForm">
+            <div class="form-group">
+              <label for="regName">Full Name</label>
+              <input id="regName" type="text" class="form-control" required placeholder="Priya Nair" />
+            </div>
+            <div class="form-group">
+              <label for="regEmail">Email</label>
+              <input id="regEmail" type="email" class="form-control" required placeholder="priya@example.com" />
+            </div>
+            <div class="form-group">
+              <label for="regPhone">Mobile Number</label>
+              <input id="regPhone" type="tel" class="form-control" required placeholder="+91 98765 43210" />
+            </div>
+            <div class="form-group">
+              <label for="regPwd">Password (min 6 characters)</label>
+              <input id="regPwd" type="password" class="form-control" required minlength="6" />
+            </div>
+            <div class="form-group">
+              <label for="regConfirm">Confirm Password</label>
+              <input id="regConfirm" type="password" class="form-control" required minlength="6" />
+            </div>
+            <button type="submit" class="btn btn-red btn-full">Create Account</button>
+          </form>
+        </div>
+
+        <div class="auth-right">
+          <img src="./assets/portal-brand.svg" alt="Business Manager 360" style="width: 92px; height: 92px; margin-bottom: 16px;" />
+          <h2 style="font-size: 18px; font-weight: 800;">Customer Portal</h2>
+          <p style="font-size: 12px; color: #64748b; margin-top: 8px; max-width: 210px;">
+            Passwords are salted and hashed locally before storage in IndexedDB.
+          </p>
+        </div>
+      </div>
+    </main>
+    <div style="height: 20px;"></div>
+  </div>
+
+  <script src="./js/portal-auth.js"></script>
+  <script>
+    (function () {
+      var auth = window.BM360PortalAuth;
+      var notice = document.getElementById('regNotice');
+      document.getElementById('registerForm').onsubmit = async function (e) {
+        e.preventDefault();
+        var name = document.getElementById('regName').value.trim();
+        var email = document.getElementById('regEmail').value.trim().toLowerCase();
+        var phone = document.getElementById('regPhone').value.trim();
+        var pwd = document.getElementById('regPwd').value;
+        var confirm = document.getElementById('regConfirm').value;
+
+        if (pwd !== confirm) {
+          notice.textContent = 'Passwords do not match.';
+          notice.style.display = 'block';
+          return;
+        }
+        var data = await auth.ensureSeedData();
+        if (data.customers.some(function (c) { return c.email.toLowerCase() === email; })) {
+          notice.textContent = 'An account with this email already exists.';
+          notice.style.display = 'block';
+          return;
+        }
+        var hash = await auth.hashPassword(pwd);
+        var custId = 'CUST' + String(data.customers.length + 1).padStart(3, '0');
+        var newAcc = {
+          id: 'cust-acc-' + Date.now(),
+          customerId: custId,
+          fullName: name,
+          email: email,
+          phone: phone,
+          passwordHash: hash,
+          status: 'Active',
+          authProvider: 'local',
+          linkedPartyName: name,
+          addresses: [],
+          createdAt: new Date().toLocaleDateString('en-GB'),
+          lastLogin: 'Just now',
+        };
+        await auth.putRecord('customerAccounts', newAcc);
+        auth.setSession({ sessionType: 'CUSTOMER', userId: newAcc.id });
+        window.location.href = './customer-dashboard.html';
+      };
+    })();
+  </script>
+</body>
+</html>

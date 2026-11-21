@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Staff Dashboard — Business Manager 360</title>
+  <link rel="stylesheet" href="./css/portal.css" />
+</head>
+<body>
+  <div class="dash-layout">
+    <aside class="dash-sidebar">
+      <div>
+        <div class="dash-brand">
+          <img src="./assets/portal-brand.svg" alt="360" style="width: 34px; height: 34px;" />
+          <div>
+            <div style="font-weight: 800; font-size: 13px;">Business Manager 360</div>
+            <div style="font-size: 11px; color: rgba(255, 228, 230, 0.8);">Staff Workspace</div>
+          </div>
+        </div>
+        <nav class="dash-nav" id="staffNav">
+          <button class="active" data-view="overview">Dashboard</button>
+          <button data-view="tasks">Assigned Tasks</button>
+          <button data-view="customers">Customers</button>
+          <button data-view="sales">Billing &amp; Sales</button>
+          <a href="../index.html">Open Full ERP App</a>
+        </nav>
+      </div>
+      <div style="padding: 12px; border-top: 1px solid rgba(255,255,255,0.12);">
+        <button id="logoutSideBtn" class="btn btn-red btn-full">Logout</button>
+      </div>
+    </aside>
+
+    <div class="dash-main">
+      <header class="dash-header">
+        <div>
+          <div id="staffGreeting" style="font-size: 16px; font-weight: 800;">Welcome, Staff</div>
+          <div id="staffIdLabel" style="font-size: 12px; color: #64748b;">Staff ID: —</div>
+        </div>
+        <button id="logoutTopBtn" class="btn btn-red">Logout</button>
+      </header>
+
+      <main class="dash-content">
+        <div class="kpi-grid">
+          <div class="kpi-card rose">
+            <div class="kpi-label">Today's Tasks</div>
+            <div id="kpiTasks" class="kpi-val">0</div>
+          </div>
+          <div class="kpi-card green">
+            <div class="kpi-label">Customers</div>
+            <div id="kpiCusts" class="kpi-val">0</div>
+          </div>
+          <div class="kpi-card amber">
+            <div class="kpi-label">Sales Recorded</div>
+            <div id="kpiSales" class="kpi-val">₹0</div>
+          </div>
+        </div>
+
+        <section class="panel-card">
+          <h2 id="staffPanelTitle" style="font-size: 15px; font-weight: 800; margin-bottom: 12px;">Your Daily Work</h2>
+          <div id="staffPanelBody" style="font-size: 13px; color: #475569;">Loading assigned tasks...</div>
+        </section>
+
+        <div class="notice-box notice-ok">
+          Keep up the good work! Role permissions from Admin control which modules are unlocked.
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="./js/portal-auth.js"></script>
+  <script>
+    (async function () {
+      var auth = window.BM360PortalAuth;
+      var session = auth.getSession();
+      if (!session || (session.sessionType !== 'STAFF' && session.sessionType !== 'ADMIN')) {
+        window.location.href = './staff-login.html';
+        return;
+      }
+
+      var data = await auth.ensureSeedData();
+      var user = data.users.find(function (u) { return u.id === session.userId; });
+      if (!user || user.status === 'Blocked') {
+        auth.setSession(null);
+        window.location.href = './staff-login.html';
+        return;
+      }
+
+      var staffCode = user.employeeId || user.id;
+      document.getElementById('staffGreeting').textContent = 'Welcome, ' + user.name;
+      document.getElementById('staffIdLabel').textContent = 'Staff ID: ' + staffCode + ' | Role: ' + user.roleName;
+
+      var tasks = (await auth.readAll('staffTasks')).filter(function (t) {
+        return t.staffId === staffCode || t.staffId === 'ALL';
+      });
+      var parties = (await auth.readAll('parties')).filter(function (p) {
+        return !p.type || p.type === 'Customer';
+      });
+      var sales = (await auth.readAll('transactions')).filter(function (t) {
+        return !t.isCancelled && t.type === 'Sale';
+      });
+      var totalSales = sales.reduce(function (s, t) { return s + (Number(t.totalAmount) || 0); }, 0);
+
+      document.getElementById('kpiTasks').textContent = String(tasks.length);
+      document.getElementById('kpiCusts').textContent = String(parties.length);
+      document.getElementById('kpiSales').textContent = '₹' + totalSales.toLocaleString('en-IN');
+
+      function renderStaffView(view) {
+        var title = document.getElementById('staffPanelTitle');
+        var body = document.getElementById('staffPanelBody');
+        if (view === 'customers') {
+          title.textContent = 'Registered Customers (' + parties.length + ')';
+          body.innerHTML = parties.length
+            ? '<table class="data-table"><thead><tr><th>Name</th><th>Phone</th><th>Balance</th></tr></thead><tbody>' +
+              parties.map(function (p) { return '<tr><td><strong>' + p.name + '</strong></td><td>' + (p.phone || '-') + '</td><td>₹' + (p.balance || 0) + '</td></tr>'; }).join('') +
+              '</tbody></table>'
+            : '<p>No customer records found yet in IndexedDB.</p>';
+          return;
+        }
+        if (view === 'sales') {
+          title.textContent = 'Recent Sale Invoices (' + sales.length + ')';
+          body.innerHTML = sales.length
+            ? '<table class="data-table"><thead><tr><th>Invoice #</th><th>Customer</th><th>Status</th><th>Amount</th></tr></thead><tbody>' +
+              sales.slice(0, 15).map(function (s) { return '<tr><td><strong>#' + s.invoiceNo + '</strong></td><td>' + s.partyName + '</td><td>' + s.status + '</td><td>₹' + Number(s.totalAmount).toLocaleString('en-IN') + '</td></tr>'; }).join('') +
+              '</tbody></table>'
+            : '<p>No sales invoices recorded yet.</p>';
+          return;
+        }
+        title.textContent = 'Your Daily Work & Assigned Tasks';
+        body.innerHTML = tasks.length
+          ? tasks.map(function (t) {
+              return '<div style="padding:10px;border:1px solid #e2e8f0;border-radius:10px;margin-bottom:8px;display:flex;justify-content:space-between;"><div><strong>' + t.title + '</strong><div style="font-size:11px;color:#64748b;">' + (t.description || '') + '</div></div><span class="badge badge-ok">' + t.status + '</span></div>';
+            }).join('')
+          : '<p>No pending tasks assigned. Open Full ERP App for counter billing.</p>';
+      }
+
+      renderStaffView('overview');
+
+      document.querySelectorAll('#staffNav button').forEach(function (btn) {
+        btn.onclick = function () {
+          document.querySelectorAll('#staffNav button').forEach(function (b) { b.classList.remove('active'); });
+          btn.classList.add('active');
+          renderStaffView(btn.getAttribute('data-view'));
+        };
+      });
+
+      function doLogout() {
+        auth.setSession(null);
+        window.location.href = './index.html';
+      }
+      document.getElementById('logoutTopBtn').onclick = doLogout;
+      document.getElementById('logoutSideBtn').onclick = doLogout;
+    })();
+  </script>
+</body>
+</html>

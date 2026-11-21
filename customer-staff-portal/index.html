@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Welcome — Business Manager 360 Portal</title>
+  <link rel="stylesheet" href="./css/portal.css" />
+</head>
+<body>
+  <div class="portal-shell">
+    <header class="topbar-public">
+      <div class="brand-row">
+        <img src="./assets/portal-brand.svg" alt="Business Manager 360 Logo" />
+        <div>
+          <div class="brand-title">Business Manager 360</div>
+          <div class="brand-sub">Customer &amp; Staff Portal</div>
+        </div>
+      </div>
+      <a class="back-link" href="../index.html">Main App</a>
+    </header>
+
+    <main class="center-stage">
+      <div class="welcome-container">
+        <div class="emblem-circle">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+            <circle cx="9" cy="21" r="1"></circle>
+            <circle cx="20" cy="21" r="1"></circle>
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+          </svg>
+        </div>
+
+        <h1 class="welcome-title">Welcome to <span>Business Manager 360</span></h1>
+        <p class="welcome-subtitle">Select how you want to continue.</p>
+
+        <div class="portal-cards">
+          <section class="portal-card">
+            <div>
+              <div class="card-icon">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+              </div>
+              <h2>Customer Portal</h2>
+              <p>Access your account, orders, invoices and profile.</p>
+            </div>
+            <a href="./customer-login.html" class="btn btn-red btn-full">→ Continue as Customer</a>
+          </section>
+
+          <section class="portal-card">
+            <div>
+              <div class="card-icon">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="9" cy="7" r="4"></circle>
+                  <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                </svg>
+              </div>
+              <h2>Staff Portal</h2>
+              <p>Access your assigned work and staff dashboard.</p>
+            </div>
+            <a href="./staff-login.html" class="btn btn-maroon btn-full">→ Continue as Staff</a>
+          </section>
+        </div>
+      </div>
+    </main>
+
+    <div style="padding: 16px; text-align: center; font-size: 11px; color: #64748b;">
+      Business Manager 360 Online Portal &bull; Connected to Store Server
+    </div>
+  </div>
+  <script src="./js/portal-auth.js"></script>
+  <script>
+    (function () {
+      var session = window.BM360PortalAuth.getSession();
+      if (session && session.sessionType === 'CUSTOMER') {
+        window.location.href = './customer-dashboard.html';
+      } else if (session && (session.sessionType === 'STAFF' || session.sessionType === 'ADMIN')) {
+        window.location.href = './staff-dashboard.html';
+      }
+    })();
+  </script>
+</body>
+</html>

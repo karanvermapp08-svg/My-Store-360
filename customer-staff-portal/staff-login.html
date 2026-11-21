@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Staff Login — Business Manager 360</title>
+  <link rel="stylesheet" href="./css/portal.css" />
+</head>
+<body>
+  <div class="portal-shell">
+    <header class="topbar-public">
+      <a class="back-link" href="./index.html">← Back</a>
+      <span style="font-size: 12px; color: #64748b; font-weight: 600;">Staff &amp; Admin Portal</span>
+    </header>
+
+    <main class="center-stage">
+      <div class="auth-split-card">
+        <div class="auth-left">
+          <div style="text-align: center; margin-bottom: 20px;">
+            <div class="emblem-circle" style="width: 52px; height: 52px; margin-bottom: 10px;">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                <circle cx="9" cy="7" r="4"></circle>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+              </svg>
+            </div>
+            <h1 style="font-size: 22px; font-weight: 800;">Staff Login</h1>
+            <p style="font-size: 12px; color: #64748b;">Sign in to your staff account</p>
+          </div>
+
+          <div id="staffNotice" class="notice-box notice-error" style="display: none;"></div>
+
+          <form id="staffLoginForm">
+            <div class="form-group">
+              <label for="staffIdInput">Staff ID or Email</label>
+              <input id="staffIdInput" type="text" class="form-control" required placeholder="ST001 or neha.staff@mystore.local" />
+            </div>
+            <div class="form-group">
+              <label for="staffPwdInput">Password</label>
+              <input id="staffPwdInput" type="password" class="form-control" required placeholder="Enter staff password" />
+            </div>
+            <button type="submit" class="btn btn-maroon btn-full">→ Login</button>
+          </form>
+
+          <div style="margin-top: 12px; display: flex; justify-content: space-between; font-size: 12px;">
+            <a href="#" id="forgotStaffLink" style="color: #8b1e2d; font-weight: 700;">Forgot Password?</a>
+            <span style="color: #64748b;">No public staff signup</span>
+          </div>
+
+          <div style="margin-top: 16px; padding-top: 12px; border-top: 1px solid #f1f5f9; font-size: 11px; color: #64748b;">
+            Test Staff: <strong>ST001</strong> / <strong>staff@password123</strong> &nbsp;|&nbsp; Admin: <strong>OWNER-01</strong> / <strong>owner@password123</strong>
+          </div>
+        </div>
+
+        <div class="auth-right">
+          <img src="./assets/portal-brand.svg" alt="Business Manager 360" style="width: 92px; height: 92px; margin-bottom: 16px;" />
+          <h2 style="font-size: 18px; font-weight: 800;">Staff Access Only</h2>
+          <p style="font-size: 12px; font-weight: 700; color: #8b1e2d; margin-top: 4px;">Authorized Personnel</p>
+          <p style="font-size: 12px; color: #64748b; margin-top: 10px; max-width: 210px;">
+            Only the Store Administrator can create staff IDs, assign permissions, or reset staff passwords.
+          </p>
+        </div>
+      </div>
+    </main>
+    <div style="height: 20px;"></div>
+  </div>
+
+  <script src="./js/portal-auth.js"></script>
+  <script>
+    (function () {
+      var auth = window.BM360PortalAuth;
+      var notice = document.getElementById('staffNotice');
+
+      function showNotice(msg, kind) {
+        notice.className = 'notice-box ' + (kind || 'notice-error');
+        notice.textContent = msg;
+        notice.style.display = 'block';
+      }
+
+      auth.ensureSeedData();
+
+      document.getElementById('forgotStaffLink').onclick = function (e) {
+        e.preventDefault();
+        showNotice('Only Store Admin can reset staff credentials. Open Admin > Customer & Staff Management > Staff Accounts.', 'notice-warn');
+      };
+
+      document.getElementById('staffLoginForm').onsubmit = async function (e) {
+        e.preventDefault();
+        var q = document.getElementById('staffIdInput').value.trim().toLowerCase();
+        var pwd = document.getElementById('staffPwdInput').value;
+        var data = await auth.ensureSeedData();
+        var user = data.users.find(function (u) {
+          return u.email.toLowerCase() === q || (u.employeeId && u.employeeId.toLowerCase() === q) || u.id.toLowerCase() === q;
+        });
+        if (!user) {
+          showNotice('No staff account found matching that ID or email.');
+          return;
+        }
+        var ok = await auth.verifyPassword(pwd, user.passwordHash);
+        if (!ok) {
+          showNotice('Incorrect staff password.');
+          return;
+        }
+        if (user.status === 'Blocked' || !user.isApproved) {
+          showNotice('This staff account is deactivated or pending Admin approval.');
+          return;
+        }
+        var isAdmin = user.roleName === 'Owner' || user.roleName === 'Admin' || user.roleName === 'Administrator';
+        auth.setSession({ sessionType: isAdmin ? 'ADMIN' : 'STAFF', userId: user.id });
+        if (isAdmin) {
+          window.location.href = '../index.html';
+        } else {
+          window.location.href = './staff-dashboard.html';
+        }
+      };
+    })();
+  </script>
+</body>
+</html>
